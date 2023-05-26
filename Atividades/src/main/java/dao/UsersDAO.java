@@ -5,6 +5,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Users;
 
@@ -71,4 +73,46 @@ public class UsersDAO {
 	        }
 	        return result;
 	    }
+	 
+	 public List<Users> listarUsuarios(Users user) throws ClassNotFoundException {
+		 
+	        List<Users> usuarios = new ArrayList<Users>();
+	        
+	        String sql = "SELECT * FROM USERS WHERE USERNAME = ?" +
+	        " AND PASSWORD = ?;";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+
+	        try (Connection connection = DriverManager
+	            .getConnection("jdbc:mysql://localhost:3306/employees", "root", "");
+
+	            PreparedStatement statement = connection.prepareStatement(sql)) {
+	            statement.setString(1, user.getUsername());
+	            statement.setString(2, user.getPassword());
+	            
+	            
+	            System.out.println(statement);
+	            
+	            ResultSet rs = statement.executeQuery();
+	            
+	            while(rs.next()) {
+	            user.setId(rs.getInt("id"));
+	            user.setEmail(rs.getString("email"));
+	            user.setName(rs.getString("name"));
+	            user.setUsername(rs.getString("username"));
+	            user.setPassword(rs.getString("password"));
+	            }
+	 
+	            usuarios.add(user);
+	            
+		        rs.close();
+		        statement.close();
+
+	        } catch (SQLException e) {
+	            // process sql exception
+	            e.printStackTrace();
+	        }      
+	        return usuarios;
+
+}
 }

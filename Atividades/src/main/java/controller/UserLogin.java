@@ -57,8 +57,8 @@ public class UserLogin extends HttpServlet {
         }
 
         if(valid == true) {
-        request.setAttribute("username", user);
-        request.setAttribute("password", user);
+        request.setAttribute("username", user.getUsername());
+        request.setAttribute("password", user.getPassword());
         RequestDispatcher dispatcher = request.getRequestDispatcher("/mainpage");
 		dispatcher.forward(request, response);
         }
