@@ -1,4 +1,5 @@
 package model;
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Activities {
@@ -7,8 +8,8 @@ public class Activities {
     private String title;
     private String description;
     private String status;
-    private Date creation_date;
-    private Date finished_date;
+    private LocalDate creation_date;
+    private LocalDate finished_date;
 
 	
 	public int getId() {
@@ -35,16 +36,16 @@ public class Activities {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public Date getCreation_date() {
+	public LocalDate getCreation_date() {
 		return creation_date;
 	}
-	public void setCreation_date(Date creation_date) {
-		this.creation_date = creation_date;
+	public void setCreation_date(LocalDate create) {
+		this.creation_date = create;
 	}
-	public Date getFinished_date() {
+	public LocalDate getFinished_date() {
 		return finished_date;
 	}
-	public void setFinished_date(Date finished_date) {
+	public void setFinished_date(LocalDate finished_date) {
 		this.finished_date = finished_date;
 	}
 
