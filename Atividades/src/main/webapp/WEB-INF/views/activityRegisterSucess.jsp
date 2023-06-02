@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@ page import= "java.util.List"%>
-    <%@ page import="jakarta.servlet.http.HttpSession" %>
+    <%@ page import="javax.servlet.http.HttpSession" %> 
     <%@ page import= "model.Users"%>
     <% session = request.getSession(); %> 
     <!DOCTYPE html>
     <html lang="en">
     <head>
     <meta charset="UTF-8">
-            <title>Call it Done (Página Inicial)</title>
+            <title>Call it Done (Tarefa Registrada)</title>
             <style>
                 header{
                     background-color: hsl(286, 100%, 33%);
@@ -70,18 +70,9 @@
                 <body>
                 <br>
                 <div style="text-align:center" style="font-family:'Courier New'">
-                <% 
-                List <Users> usuarios = (List) request.getAttribute("usuarios");
-                %>
-                Bem vindo 
-                <%
-                for (Users u : usuarios){ 
-                %>
-                <strong>
-                <td><%=u.getUsername()%></td>
-                <%} %>
-                </strong>
-                !
+                Tarefa de 
+                <% String username = (String) session.getAttribute("username"); %>
+                 registrada com sucesso!
                 </div>
                 </body>
             </html>

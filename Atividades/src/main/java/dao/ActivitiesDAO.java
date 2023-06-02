@@ -12,16 +12,16 @@ import model.Activities;
 public class ActivitiesDAO {
 
 	public int registerActivity(Activities activity) throws ClassNotFoundException {
-        String INSERT_USERS_SQL = "INSERT INTO ACTIVITIES" +
-            "  (id, title, description, status, creation_date) VALUES " +
-            " (?, ?, ?, ?, ?);";
+        String INSERT_USERS_SQL = "INSERT INTO ACTIVITY" +
+            "  (id, title, description, status, creation_date, finished_date, user_id) VALUES " +
+            " (?, ?, ?, ?, ?, ?, ?);";
 
         int result = 0;
 
         Class.forName("com.mysql.jdbc.Driver");
 
         try (Connection connection = DriverManager
-            .getConnection("jdbc:mysql://localhost:3306/employees", "root", "");
+            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
@@ -29,7 +29,9 @@ public class ActivitiesDAO {
             preparedStatement.setString(2, activity.getTitle());
             preparedStatement.setString(3, activity.getDescription());
             preparedStatement.setString(4, activity.getStatus());
-            preparedStatement.setDate(5, activity.getCreation_date());
+            preparedStatement.setString(5, activity.getCreation_date());
+            preparedStatement.setString(6, activity.getFinished_date());
+
 
 
             System.out.println(preparedStatement);

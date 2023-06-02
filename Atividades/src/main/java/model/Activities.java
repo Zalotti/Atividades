@@ -8,8 +8,8 @@ public class Activities {
     private String title;
     private String description;
     private String status;
-    private LocalDate creation_date;
-    private LocalDate finished_date;
+    private String creation_date;
+    private String finished_date;
 
 	
 	public int getId() {
@@ -36,16 +36,16 @@ public class Activities {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public LocalDate getCreation_date() {
+	public String getCreation_date() {
 		return creation_date;
 	}
-	public void setCreation_date(LocalDate create) {
-		this.creation_date = create;
+	public void setCreation_date(String creation_date) {
+		this.creation_date = creation_date;
 	}
-	public LocalDate getFinished_date() {
+	public String getFinished_date() {
 		return finished_date;
 	}
-	public void setFinished_date(LocalDate finished_date) {
+	public void setFinished_date(String finished_date) {
 		this.finished_date = finished_date;
 	}
 

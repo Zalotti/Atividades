@@ -13,7 +13,7 @@ import model.Users;
 public class UsersDAO {
 
 	public int registerUser(Users user) throws ClassNotFoundException {
-        String INSERT_USERS_SQL = "INSERT INTO USERS" +
+        String INSERT_USERS_SQL = "INSERT INTO USER" +
             "  (id, name, username, email, password) VALUES " +
             " (?, ?, ?, ?, ?);";
 
@@ -22,7 +22,7 @@ public class UsersDAO {
         Class.forName("com.mysql.jdbc.Driver");
 
         try (Connection connection = DriverManager
-            .getConnection("jdbc:mysql://localhost:3306/employees", "root", "");
+            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
@@ -45,7 +45,7 @@ public class UsersDAO {
     }
 	
 	 public boolean loginUser(Users user) throws ClassNotFoundException {
-	        String GET_USERS_SQL = "SELECT * FROM USERS WHERE USERNAME = ?" +
+	        String GET_USERS_SQL = "SELECT * FROM USER WHERE USERNAME = ?" +
 	        		                " AND PASSWORD = ?;";
 
 	        boolean result = false;
@@ -53,7 +53,7 @@ public class UsersDAO {
 	        Class.forName("com.mysql.jdbc.Driver");
 
 	        try (Connection connection = DriverManager
-	            .getConnection("jdbc:mysql://localhost:3306/employees", "root", "");
+	            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
 
 	            // Step 2:Create a statement using connection object
 	            PreparedStatement preparedStatement = connection.prepareStatement(GET_USERS_SQL)) {
@@ -74,17 +74,46 @@ public class UsersDAO {
 	        return result;
 	    }
 	 
+	 public int getUserId(Users user) throws ClassNotFoundException{
+		 String GET_USERS_SQL = "SELECT * FROM USER WHERE USERNAME = ?";
+
+         int result = 0;
+
+          Class.forName("com.mysql.jdbc.Driver");
+
+         try (Connection connection = DriverManager
+         .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+         // Step 2:Create a statement using connection object
+         PreparedStatement preparedStatement = connection.prepareStatement(GET_USERS_SQL)) {
+         preparedStatement.setString(1, user.getUsername());
+
+         System.out.println(preparedStatement);
+
+         ResultSet rs = preparedStatement.executeQuery();
+         while(rs.next()) {
+	            result = (rs.getInt("id"));
+	            }
+         System.out.println(rs);
+
+         } catch (SQLException e) {
+         // process sql exception
+         e.printStackTrace();
+         }
+        return result;
+	 }
+	 
 	 public List<Users> listarUsuarios(Users user) throws ClassNotFoundException {
 		 
 	        List<Users> usuarios = new ArrayList<Users>();
 	        
-	        String sql = "SELECT * FROM USERS WHERE USERNAME = ?" +
+	        String sql = "SELECT * FROM USER WHERE USERNAME = ?" +
 	        " AND PASSWORD = ?;";
 	        
 	        Class.forName("com.mysql.jdbc.Driver");
 
 	        try (Connection connection = DriverManager
-	            .getConnection("jdbc:mysql://localhost:3306/employees", "root", "");
+	            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
 
 	            PreparedStatement statement = connection.prepareStatement(sql)) {
 	            statement.setString(1, user.getUsername());

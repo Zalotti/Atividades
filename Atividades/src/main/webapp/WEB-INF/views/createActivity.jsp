@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ page import="jakarta.servlet.http.HttpSession" %> 
     <!DOCTYPE html>
     <html>
     <head>
@@ -53,6 +54,9 @@
             </header>
         <div style="text-align:center">
             <td><img src="register.png"></td>
+            <br>
+            Tarefas de 
+            <%=session.getAttribute("username") %>
             </div>
       <form action="<%= request.getContextPath() %>/create" method="post">
        <table style="width: 80%" style="text-align: center;">
@@ -65,6 +69,17 @@
          <td><input type="text" name="description" /></td>
         </tr>
         <tr>
+        <td>Data de Início</td>
+         <td><input type="date" id="creation_date" name="creation_date"
+       value="2023-01-01"
+       min="2023-01-01" max="2023-12-31"></td>
+        </tr>
+        <tr>
+        <td>Data de Fim</td>
+         <td><input type="date" id="finished_date" name="finished_date"
+       value="2023-01-01"
+       min="2023-01-01" max="2023-12-31"></td>
+        </tr>
        </table>
        <br>
        <input type="submit" value="Cadastrar Atividade" />
