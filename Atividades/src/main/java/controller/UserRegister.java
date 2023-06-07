@@ -40,8 +40,8 @@ public class UserRegister extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("name");
-        String name = request.getParameter("email");
+		String email = request.getParameter("email");
+        String name = request.getParameter("name");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 

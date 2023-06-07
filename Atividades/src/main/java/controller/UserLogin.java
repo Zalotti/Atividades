@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.io.PrintWriter;
+
 import model.Users;
 
 import java.io.IOException;
@@ -43,10 +45,8 @@ public class UserLogin extends HttpServlet {
 		
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        PrintWriter out = response.getWriter();
         
-        HttpSession session = request.getSession(); 
-        session.setAttribute("username", username);
-
 
         Users user = new Users();
 
@@ -63,11 +63,17 @@ public class UserLogin extends HttpServlet {
         if(valid == true) {
         request.setAttribute("username", user.getUsername());
         request.setAttribute("password", user.getPassword());
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/mainpage");
+        HttpSession session = request.getSession(); 
+        session.setAttribute("username", username);
+        session.setAttribute("password", password);
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/logindone");
 		dispatcher.forward(request, response);
         }
         else { 
-        	
+        	String mesage = "Usuario ou senha invalidos !";
+        	out.println("<script type='text/javascript'>");
+        	out.println("alert(" + "'" + mesage + "'" + ");</script>");
+        	out.println("</head><body></body></html>");
         }
     }
 	

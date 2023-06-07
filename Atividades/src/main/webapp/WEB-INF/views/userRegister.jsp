@@ -41,7 +41,7 @@
             <table>
             <tr>
             <div style="text-align:center">
-            <td><img src="logo.png" width="300" height="300"></td>
+            <td><img src="https://i.imgur.com/7haRea7.png" width="300" height="300"></td>
             </div>
             <td><div style="text-align:right" style="font-family:'Courier New'">
                 <div class="vertical-menu">
@@ -52,7 +52,7 @@
             </table>
             </header>
         <div style="text-align:center">
-            <td><img src="register.png"></td>
+            <td><img src="https://i.imgur.com/hwA2tL6.png"></td>
             </div>
       <form action="<%= request.getContextPath() %>/register" method="post">
        <table style="width: 80%" style="text-align: center;">

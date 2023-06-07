@@ -10,16 +10,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
-
+import jakarta.servlet.http.HttpSession;
 import dao.UsersDAO;
+import dao.ActivitiesDAO;
 
 import model.Users;
+import model.Activities;
 
 @WebServlet("/mainpage")
 public class MainPage extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	UsersDAO usersDao = new UsersDAO();
+	ActivitiesDAO activitiesDao = new ActivitiesDAO();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -32,25 +34,34 @@ public class MainPage extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     	
+    	 int userId = 0;
     	 Users user = new Users();
+    	 Activities activity = new Activities();
+    	 HttpSession session = request.getSession(); 
     	 
-    	String username = (String) request.getAttribute("username");
-    	String password = (String) request.getAttribute("password");
+    	String username = (String) session.getAttribute("username");
+    	String password = (String) session.getAttribute("password");
     	
     	user.setUsername(username);
         user.setPassword(password);
     	
         List<Users> usuarios;
+        List<Activities> atividades;
+        
 		try {
 			usuarios = usersDao.listarUsuarios(user);
+			userId = usersDao.getUserId(user);
+			atividades = activitiesDao.listarAtividades(userId);
 			request.setAttribute("usuarios", usuarios);
+			request.setAttribute("atividades", atividades);
+			
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		// Encaminha para o JSP responsável por exibir os dados
-		request.getRequestDispatcher("/WEB-INF/views/home.jsp").forward(request, response);
+		request.getRequestDispatcher("/WEB-INF/views/showActivity.jsp").forward(request, response);
     }
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

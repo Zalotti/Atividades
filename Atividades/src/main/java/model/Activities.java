@@ -10,6 +10,7 @@ public class Activities {
     private String status;
     private String creation_date;
     private String finished_date;
+    private int userId;
 
 	
 	public int getId() {
@@ -47,6 +48,13 @@ public class Activities {
 	}
 	public void setFinished_date(String finished_date) {
 		this.finished_date = finished_date;
+	}
+
+	public int getUserId() {
+		return userId;
+	}
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 
 }

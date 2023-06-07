@@ -42,10 +42,14 @@
             <table>
             <tr>
             <div style="text-align:center">
-            <td><img src="logo.png" width="300" height="300"></td>
+            <td><img src="https://i.imgur.com/7haRea7.png" width="300" height="300"></td>
             </div>
             <td><div style="text-align:right" style="font-family:'Courier New'">
                 <div class="vertical-menu">
+                 <a href="mainpage"><img src='https://i.imgur.com/W4Z4QyO.png' style="width: 30px;" style="height: 10px;"/> Página Inicial</a>
+            <a href="create"><img src='https://i.imgur.com/RvO8OWb.png' style="width: 30px;" style="height: 10px;"/> Criar Atividade</a>
+            <a href="editactivity"><img src='https://i.imgur.com/K1FpuJf.png' style="width: 30px;" style="height: 10px;"/> Editar Atividade</a>
+            <a href="deleteactivity"><img src='https://i.imgur.com/FVmXCLt.png' style="width: 30px;" style="height: 10px;"/> Excluir Atividade</a>
                   </div>
             </div>
             </td>
@@ -53,29 +57,27 @@
             </table>
             </header>
         <div style="text-align:center">
-            <td><img src="register.png"></td>
+            <td><img src="https://i.imgur.com/b1KQ9om.png"></td>
             <br>
-            Tarefas de 
-            <%=session.getAttribute("username") %>
             </div>
       <form action="<%= request.getContextPath() %>/create" method="post">
        <table style="width: 80%" style="text-align: center;">
         <tr>
-         <td>Título</td>
+         <td>Título:</td>
          <td><input type="text" name="title" /></td>
         </tr>
         <tr>
-         <td>Descrição</td>
+         <td>Descrição:</td>
          <td><input type="text" name="description" /></td>
         </tr>
         <tr>
-        <td>Data de Início</td>
+        <td>Data de Início:</td>
          <td><input type="date" id="creation_date" name="creation_date"
        value="2023-01-01"
        min="2023-01-01" max="2023-12-31"></td>
         </tr>
         <tr>
-        <td>Data de Fim</td>
+        <td>Data de Fim:</td>
          <td><input type="date" id="finished_date" name="finished_date"
        value="2023-01-01"
        min="2023-01-01" max="2023-12-31"></td>

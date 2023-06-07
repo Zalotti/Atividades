@@ -50,7 +50,7 @@
                 <table>
                 <tr>
                 <div style="text-align:center">
-                <td><img src="logo.png" width="300" height="300"></td>
+                <td><img src="https://i.imgur.com/7haRea7.png" width="300" height="300"></td>
                 </div>
                 <td><div style="text-align:right" style="font-family:'Courier New'">
                     <div class="vertical-menu">
@@ -62,7 +62,7 @@
                 </header>
             <body>
                 <div style="text-align:center">
-                <td><img src="login.png"></td>
+                <td><img src="https://i.imgur.com/4q14wcD.png"></td>
                 </div>
              <form action="<%= request.getContextPath() %>/login" method="post">
                 <div style="text-align:center">
@@ -72,6 +72,7 @@
                 <input type="password" name="password" id="password" required pattern="[a-Za-Z\s]+$"><br>
                 <br>
                 <input type="submit" value="Login" />
+                <br>
                 <br>
                 <a href="register">Não possui login?</a>
     

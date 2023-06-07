@@ -6,6 +6,7 @@ import java.util.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
+
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -13,6 +14,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+
 import model.Activities;
 import model.Users;
 import dao.ActivitiesDAO;
@@ -73,9 +75,11 @@ public class CreateActivity extends HttpServlet {
 		activity.setFinished_date(finished_date);
 		
 		user.setUsername((String) session.getAttribute("username"));
+		user.setPassword((String) session.getAttribute("password"));
 
 		try {
 			id = usersDAO.getUserId(user);
+			activity.setUserId(id);
 			activitiesDAO.registerActivity(activity);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

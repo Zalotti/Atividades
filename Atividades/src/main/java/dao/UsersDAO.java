@@ -75,7 +75,8 @@ public class UsersDAO {
 	    }
 	 
 	 public int getUserId(Users user) throws ClassNotFoundException{
-		 String GET_USERS_SQL = "SELECT * FROM USER WHERE USERNAME = ?";
+		 String GET_USERS_SQL = "SELECT * FROM USER WHERE USERNAME = ?" +
+	                            "AND PASSWORD = ?;";
 
          int result = 0;
 
@@ -87,6 +88,7 @@ public class UsersDAO {
          // Step 2:Create a statement using connection object
          PreparedStatement preparedStatement = connection.prepareStatement(GET_USERS_SQL)) {
          preparedStatement.setString(1, user.getUsername());
+         preparedStatement.setString(2, user.getPassword());
 
          System.out.println(preparedStatement);
 
