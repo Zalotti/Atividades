@@ -1,5 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+        <% session = request.getSession(); 
+    String username = (String)session.getAttribute("username");
+     if(username != null){
+    	 response.sendRedirect("mainpage");
+     }
+       %> 
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -11,6 +17,7 @@
                 }
                 body{
                 background-color: #f9f9f9;
+                margin: 0;
                 }
                 footer{
                     position: fixed;
@@ -43,6 +50,18 @@
                 background-color: hsl(286, 100%, 33%); /* Add a green color to the "active/current" link */
                 color: white;
                 }
+                 .login {
+  background-color: hsl(286, 100%, 33%);
+  border: 2px solid grey;
+  color: white;
+  padding: 7px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  border-radius: 12px;
+}
             
             </style>
             </head>
@@ -66,12 +85,12 @@
                 </div>
              <form action="<%= request.getContextPath() %>/login" method="post">
                 <div style="text-align:center">
-                <label for="username">Usuário:</label><br>
+                <label for="username"><strong>Usuário:</strong></label><br>
                 <input type="text" name="username" id="username" required><br>
-                <label for="pass">Senha:</label><br>
+                <label for="pass"><strong>Senha:</strong></label><br>
                 <input type="password" name="password" id="password" required pattern="[a-Za-Z\s]+$"><br>
                 <br>
-                <input type="submit" value="Login" />
+                <input type="submit" value="Login" class="login"/>
                 <br>
                 <br>
                 <a href="register">Não possui login?</a>

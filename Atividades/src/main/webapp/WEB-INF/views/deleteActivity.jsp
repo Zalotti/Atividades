@@ -4,7 +4,13 @@
     <%@ page import="jakarta.servlet.http.HttpSession" %>
     <%@ page import= "model.Users"%>
     <%@ page import= "model.Activities"%>
-    <% session = request.getSession(); %> 
+    <%@ page import= "dao.ActivitiesDAO"%>
+    <% session = request.getSession(); 
+    String username = (String)session.getAttribute("username");
+     if(username == null){
+    	 response.sendRedirect("login");
+     }
+       %> 
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -16,6 +22,7 @@
                 }
                 body{
                 background-color: #f9f9f9;
+                margin: 0;
                 }
                 footer{
                     position: fixed;
@@ -93,9 +100,53 @@
                  .closebtn:hover {
                   color: black;
                   }
-                
-                 
-            
+                 .userInterface{
+                position: absolute;
+                right: 0;
+                top: 0;
+                 font-family: Courier New;
+                color: white;
+                }
+                .userInterface a{
+                color: white; /* Black text color */
+                font-family: 'Courier New', Courier, monospace;
+                font-size: medium;
+                font-weight: bold;
+                display: block; /* Make the links appear below each other */
+                text-decoration: none; /* Remove underline from links */
+                }
+                .collapsible {
+                    background-color: hsl(286, 100%, 33%);
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: hsl(286, 100%, 33%);
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+ background-color: hsl(286, 100%, 33%);
+}
+.exit{
+background-color: hsl(286, 100%, 33%);
+ color: white;
+padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}             
             </style>
             </head>
             <header>
@@ -114,6 +165,10 @@
       </div>
 </div>
 </td>
+<div class = "userInterface">
+  <button type="button" class="collapsible"><img src="https://i.imgur.com/8ayPVTa.png" style="width: 30px;" style="height: 10px;"> <%=session.getAttribute("username")%> </button>  
+  <div class="content"><a href="logout.jsp"><img src="https://i.imgur.com/wn0HLy4.png" style="width: 15px;" style="height: 5px;"> Sair</a></div>   
+  </div>
 </tr>
 </table>
 </header>
@@ -132,6 +187,7 @@
                 <table id="allActivities" aling="center" border="1px" width="100%">
                
                 <tr>
+                <th>#</th>
                 <th>Título</th>
                 <th>Descrição</th>
                 <th>Status</th>
@@ -145,17 +201,33 @@
                   %>
 
             <tr>
+                <td><%=a.getId()%></td>
                 <td><%=a.getTitle()%></td>
                 <td><%=a.getDescription()%></td>
                 <td><%=a.getStatus()%></td>
                 <td><%=a.getCreation_date()%></td>
                 <td><%=a.getFinished_date()%></td>
-                <td><img src="https://i.imgur.com/7pGWOig.png" style="width: 30px;" style="height: 10px;" onclick="deleteRow(this)"></td>
+                <td><a id="delete" href="deleteItem.jsp?id=<%=a.getId()%>"><img src="https://i.imgur.com/7pGWOig.png" style="width: 30px;" style="height: 10px;" onclick="deleteRow(this)")></a></td>
             </tr>
             <%} %>
             </table>
                 </div>
                 <script>
+                var coll = document.getElementsByClassName("collapsible");
+                var i;
+
+                for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                      content.style.display = "none";
+                    } else {
+                      content.style.display = "block";
+                    }
+                  });
+                }
+                
 function search() {
   // Declare variables
   var input, filter, table, tr, td, i, txtValue;
@@ -166,7 +238,7 @@ function search() {
 
   // Loop through all table rows, and hide those who don't match the search query
   for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
+    td = tr[i].getElementsByTagName("td")[1];
     if (td) {
       txtValue = td.textContent || td.innerText;
       if (txtValue.toUpperCase().indexOf(filter) > -1) {
@@ -178,11 +250,15 @@ function search() {
   }
 }
 function deleteRow(r) {
+	var table, tr, td;
+    var title, id;
+    table = document.getElementById("allActivities");
+    tr = table.getElementsByTagName("tr");
+    var i = r.parentNode.parentNode.rowIndex;  
 	var div = document.createElement('div');
 	div.innerHTML = '<span class="closebtn">&times;</span> <strong>Sucesso!</strong> A atividade foi deletada com sucesso.'  
     div.setAttribute('class', 'alert success');
     var i = r.parentNode.parentNode.rowIndex;
-    document.getElementById("allActivities").deleteRow(i);
     document.body.appendChild(div);
     var close = document.getElementsByClassName("closebtn");
     var i;

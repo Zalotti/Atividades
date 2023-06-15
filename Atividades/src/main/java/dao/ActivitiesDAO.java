@@ -69,6 +69,7 @@ public class ActivitiesDAO {
 	            
 	            while(rs.next()) {
 	            Activities activity = new Activities();
+	            activity.setId(rs.getInt("id"));
 	            activity.setTitle(rs.getString("title"));
 	            activity.setDescription(rs.getString("description"));
 	            activity.setStatus(rs.getString("status"));
@@ -88,4 +89,108 @@ public class ActivitiesDAO {
 	        return atividades;
 
 }
+	 
+	 public static int deletarAtividade(Activities activity) throws ClassNotFoundException {
+		
+		 int status = 0;
+	        
+	        String sql = "DELETE FROM ACTIVITY WHERE ID = ?;";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+
+	        try (Connection connection = DriverManager
+	            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+	            PreparedStatement statement = connection.prepareStatement(sql)) {
+	            statement.setInt(1, activity.getId());
+	            
+	            System.out.println(statement);
+	            
+	            status = statement.executeUpdate();
+	            
+	           
+		        statement.close();
+
+	        } catch (SQLException e) {
+	            // process sql exception
+	            e.printStackTrace();
+	        }      
+	        return status;
+	 }
+	 public static List<Activities> pegarAtividade(Activities activity) throws ClassNotFoundException {
+		 
+	        List<Activities> atividades = new ArrayList<Activities>();
+	        
+	        String sql = "SELECT * FROM ACTIVITY WHERE ID = ?;";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+
+	        try (Connection connection = DriverManager
+	            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+	            PreparedStatement statement = connection.prepareStatement(sql)) {
+	            statement.setInt(1, activity.getId());
+	            
+	            System.out.println(statement);
+	            
+	            ResultSet rs = statement.executeQuery();
+	            
+	            while(rs.next()) {
+	            activity.setTitle(rs.getString("title"));
+	            activity.setDescription(rs.getString("description"));
+	            activity.setStatus(rs.getString("status"));
+	            activity.setCreation_date(rs.getString("creation_date"));
+	            activity.setFinished_date(rs.getString("finished_date"));
+	            
+	            atividades.add(activity);
+	            }
+	            
+		        rs.close();
+		        statement.close();
+
+	        } catch (SQLException e) {
+	            // process sql exception
+	            e.printStackTrace();
+	        }      
+	        return atividades;
+
+}
+	 public static int updateActivity(Activities activity) throws ClassNotFoundException {
+			
+		 int status = 0;
+	        
+	        String sql = "UPDATE"
+	        		+ "  ACTIVITY"
+	        		+ " SET"
+	        		+ "  TITLE = ?,"
+	        		+ "  DESCRIPTION = ?,"
+	        		+ "  CREATION_DATE = ?,"
+	        		+ "  FINISHED_DATE = ?"
+	        		+ " WHERE ID = ?";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+
+	        try (Connection connection = DriverManager
+	            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+	            PreparedStatement statement = connection.prepareStatement(sql)) {
+	            statement.setString(1, activity.getTitle());
+	            statement.setString(2, activity.getDescription());
+	            statement.setString(3, activity.getCreation_date());
+	            statement.setString(4, activity.getFinished_date());
+	            statement.setInt(5, activity.getId());
+	            
+	            System.out.println(statement);
+	            
+	            status = statement.executeUpdate();
+	            
+	           
+		        statement.close();
+
+	        } catch (SQLException e) {
+	            // process sql exception
+	            e.printStackTrace();
+	        }      
+	        return status;
+	 }
 }

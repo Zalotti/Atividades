@@ -3,7 +3,12 @@
     <%@ page import= "java.util.List"%>
     <%@ page import="jakarta.servlet.http.HttpSession" %> 
     <%@ page import= "model.Users"%>
-    <% session = request.getSession(); %> 
+    <% session = request.getSession(); 
+    String username = (String)session.getAttribute("username");
+     if(username == null){
+    	 response.sendRedirect("login");
+     }
+       %> 
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -15,6 +20,7 @@
                 }
                 body{
                 background-color: #f9f9f9;
+                margin: 0;
                 }
                 footer{
                     position: fixed;
@@ -56,6 +62,54 @@
                 background-color: hsl(286, 100%, 33%); /* Add a green color to the "active/current" link */
                 color: white;
                 }
+                
+                 .userInterface{
+                position: absolute;
+                right: 0;
+                top: 0;
+                 font-family: Courier New;
+                color: white;
+                }
+                 .userInterface a{
+                color: white; /* Black text color */
+                font-family: 'Courier New', Courier, monospace;
+                font-size: medium;
+                font-weight: bold;
+                display: block; /* Make the links appear below each other */
+                text-decoration: none; /* Remove underline from links */
+                }
+                .collapsible {
+                    background-color: hsl(286, 100%, 33%);
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+.active, .collapsible:hover {
+  background-color: hsl(286, 100%, 33%);
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+ background-color: hsl(286, 100%, 33%);
+}
+.exit{
+background-color: hsl(286, 100%, 33%);
+ color: white;
+padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
             
             </style>
             </head>
@@ -75,6 +129,10 @@
       </div>
 </div>
 </td>
+<div class = "userInterface">
+  <button type="button" class="collapsible"><img src="https://i.imgur.com/8ayPVTa.png" style="width: 30px;" style="height: 10px;"> <%=session.getAttribute("username")%> </button>  
+ <div class="content"><a href="logout.jsp"><img src="https://i.imgur.com/wn0HLy4.png" style="width: 15px;" style="height: 5px;"> Sair</a></div>   
+  </div>
 </tr>
 </table>
 </header>
@@ -93,4 +151,20 @@
                 </div>
                 </div>
                 </body>
+                <script>
+                var coll = document.getElementsByClassName("collapsible");
+                var i;
+
+                for (i = 0; i < coll.length; i++) {
+                  coll[i].addEventListener("click", function() {
+                    this.classList.toggle("active");
+                    var content = this.nextElementSibling;
+                    if (content.style.display === "block") {
+                      content.style.display = "none";
+                    } else {
+                      content.style.display = "block";
+                    }
+                  });
+                }
+                </script>
             </html>
