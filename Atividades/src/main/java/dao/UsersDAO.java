@@ -11,6 +11,69 @@ import java.util.List;
 import model.Users;
 
 public class UsersDAO {
+	
+	 public static boolean validarUsuario(String username) throws ClassNotFoundException {
+		 boolean valid = true;
+		 
+		 String sql = "SELECT * FROM USER WHERE USERNAME = ?;";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+	        
+	        try (Connection connection = DriverManager
+		            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+		            PreparedStatement statement = connection.prepareStatement(sql)) {
+		            statement.setString(1, username);
+		            
+		            System.out.println(statement);
+		            ResultSet rs = statement.executeQuery();
+		            
+		            while(rs.next()) {
+			            valid = false;
+			            }
+		            
+		           
+			        statement.close();
+
+		        } catch (SQLException e) {
+		            // process sql exception
+		            e.printStackTrace();
+		        }      
+		 
+		 return valid; 
+	 }
+	 
+	 public static boolean validarEmail(String email) throws ClassNotFoundException {
+		 boolean valid = true;
+		 
+		 String sql = "SELECT * FROM USER WHERE EMAIL = ?;";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+	        
+	        try (Connection connection = DriverManager
+		            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+		            PreparedStatement statement = connection.prepareStatement(sql)) {
+		            statement.setString(1, email);
+		            
+		            System.out.println(statement);
+		            ResultSet rs = statement.executeQuery();
+		            
+		            while(rs.next()) {
+			            valid = false;
+			            }
+		            
+		           
+			        statement.close();
+
+		        } catch (SQLException e) {
+		            // process sql exception
+		            e.printStackTrace();
+		        }      
+		 
+		 return valid; 
+	 }
+
 
 	public int registerUser(Users user) throws ClassNotFoundException {
         String INSERT_USERS_SQL = "INSERT INTO USER" +
@@ -18,6 +81,23 @@ public class UsersDAO {
             " (?, ?, ?, ?, ?);";
 
         int result = 0;
+        boolean valid = true;
+        
+        UsersDAO userDao = new UsersDAO();
+        
+        valid = userDao.validarUsuario(user.getUsername());
+        
+        if(valid == false) {
+        	result = 2;
+        	return result;
+        }
+        
+        valid = userDao.validarEmail(user.getEmail());
+        
+        if(valid == false) {
+        	result = 3;
+        	return result;
+        }
 
         Class.forName("com.mysql.jdbc.Driver");
 
@@ -41,7 +121,7 @@ public class UsersDAO {
             // process sql exception
             e.printStackTrace();
         }
-        return result;
+        return result = 1;
     }
 	
 	 public boolean loginUser(Users user) throws ClassNotFoundException {

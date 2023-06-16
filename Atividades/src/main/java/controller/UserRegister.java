@@ -44,6 +44,7 @@ public class UserRegister extends HttpServlet {
         String name = request.getParameter("name");
         String username = request.getParameter("username");
         String password = request.getParameter("password");
+        int result = 0;
 
         Users user = new Users();
         user.setName(name);
@@ -52,16 +53,26 @@ public class UserRegister extends HttpServlet {
         user.setPassword(password);
 
         try {
-            userDao.registerUser(user);
+            result = userDao.registerUser(user);
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
+        if(result == 1) {
+        RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/registerSucess.jsp");
 		dispatcher.forward(request, response);
-    }
+        }
+        
+        else if(result == 2) {
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/registerTakenUsername.jsp");
+    		dispatcher.forward(request, response);
+        }
+        else if(result == 3) {
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/registerTakenEmail.jsp");
+    		dispatcher.forward(request, response);
+        }
 	
-
+	}
 }
 

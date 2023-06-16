@@ -18,7 +18,7 @@ import dao.UsersDAO;
 @WebServlet("/login")
 public class UserLogin extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+
 	UsersDAO userDao = new UsersDAO();
 
     /**
@@ -41,13 +41,11 @@ public class UserLogin extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-		boolean valid = false; 
+		boolean valid = false;
 		
         String username = request.getParameter("username");
         String password = request.getParameter("password");
-        PrintWriter out = response.getWriter();
-        
-
+    	PrintWriter out = response.getWriter();
         Users user = new Users();
 
         user.setUsername(username);
@@ -70,10 +68,12 @@ public class UserLogin extends HttpServlet {
 		dispatcher.forward(request, response);
         }
         else { 
-        	String mesage = "Usuario ou senha invalidos !";
+        	String message = "Usuario ou senha invalidos !";
         	out.println("<script type='text/javascript'>");
-        	out.println("alert(" + "'" + mesage + "'" + ");</script>");
-        	out.println("</head><body></body></html>");
+        	out.println("alert(" + "'" + message + "'" + ");</script>");
+        	RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/views/login.jsp");
+        	request.setAttribute("message", message);
+    		doGet(request, response);
         }
     }
 	

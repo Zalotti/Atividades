@@ -21,7 +21,10 @@ public class ActivitiesDAO {
             " (?, ?, ?, ?, ?, ?, ?);";
 
         int result = 0;
-
+        boolean valid = false;
+        int id = 0;
+        ActivitiesDAO activitiesDAO = new ActivitiesDAO();
+        
         Class.forName("com.mysql.jdbc.Driver");
 
         try (Connection connection = DriverManager
@@ -29,7 +32,12 @@ public class ActivitiesDAO {
 
             // Step 2:Create a statement using connection object
             PreparedStatement preparedStatement = connection.prepareStatement(INSERT_USERS_SQL)) {
-            preparedStatement.setInt(1, (int) (Math.random() * (100 - 1) + 1));
+        	while(valid == false) {
+        		id = (int) (Math.random() * (100 - 1) + 1);
+        		valid = activitiesDAO.validarId(id);
+        		
+        	}
+            preparedStatement.setInt(1, id);
             preparedStatement.setString(2, activity.getTitle());
             preparedStatement.setString(3, activity.getDescription());
             preparedStatement.setString(4, activity.getStatus());
@@ -89,6 +97,36 @@ public class ActivitiesDAO {
 	        return atividades;
 
 }
+	 public static boolean validarId(int id) throws ClassNotFoundException {
+		 boolean valid = true;
+		 
+		 String sql = "SELECT * FROM ACTIVITY WHERE ID = ?;";
+	        
+	        Class.forName("com.mysql.jdbc.Driver");
+	        
+	        try (Connection connection = DriverManager
+		            .getConnection("jdbc:mysql://localhost:3306/activities", "root", "");
+
+		            PreparedStatement statement = connection.prepareStatement(sql)) {
+		            statement.setInt(1, id);
+		            
+		            System.out.println(statement);
+		            ResultSet rs = statement.executeQuery();
+		            
+		            while(rs.next()) {
+			            valid = false;
+			            }
+		            
+		           
+			        statement.close();
+
+		        } catch (SQLException e) {
+		            // process sql exception
+		            e.printStackTrace();
+		        }      
+		 
+		 return valid; 
+	 }
 	 
 	 public static int deletarAtividade(Activities activity) throws ClassNotFoundException {
 		
@@ -164,6 +202,7 @@ public class ActivitiesDAO {
 	        		+ " SET"
 	        		+ "  TITLE = ?,"
 	        		+ "  DESCRIPTION = ?,"
+	        		+ "  STATUS = ?,"
 	        		+ "  CREATION_DATE = ?,"
 	        		+ "  FINISHED_DATE = ?"
 	        		+ " WHERE ID = ?";
@@ -176,9 +215,10 @@ public class ActivitiesDAO {
 	            PreparedStatement statement = connection.prepareStatement(sql)) {
 	            statement.setString(1, activity.getTitle());
 	            statement.setString(2, activity.getDescription());
-	            statement.setString(3, activity.getCreation_date());
-	            statement.setString(4, activity.getFinished_date());
-	            statement.setInt(5, activity.getId());
+	            statement.setString(3, activity.getStatus());
+	            statement.setString(4, activity.getCreation_date());
+	            statement.setString(5, activity.getFinished_date());
+	            statement.setInt(6, activity.getId());
 	            
 	            System.out.println(statement);
 	            
