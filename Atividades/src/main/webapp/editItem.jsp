@@ -166,15 +166,15 @@ padding: 18px;
          %>
         <tr>
          <td><strong>Título:</strong></td>
-         <td><input type="text" name="title"  value="<%=a.getTitle()%>"/></td>
+         <td><input type="text" name="title"  value="<%=a.getTitle()%>" required/></td>
         </tr>
         <tr>
          <td><strong>Descrição:</strong></td>
-         <td><input type="text" name="description" value="<%=a.getDescription()%>"/></td>
+         <td><input type="text" name="description" value="<%=a.getDescription()%>" required/></td>
         </tr>
          <tr>
          <td><strong>Status:</strong></td>
-         <td><input type="text" name="status" value="<%=a.getStatus()%>"/></td>
+         <td><input type="text" name="status" value="<%=a.getStatus()%>" required/></td>
         </tr>
         <tr>
         <td><strong>Data de Início:</strong></td>

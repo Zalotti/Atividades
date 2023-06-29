@@ -86,7 +86,7 @@
         </tr>
         <tr>
         <td><strong>E-mail:</strong></td>
-         <td><input type="login" name="email" required/></td>
+         <td><input type="email" name="email" required/></td>
         </tr>
         <tr>
          <td><strong>Senha:</strong></td>
